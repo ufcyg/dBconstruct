@@ -5,7 +5,7 @@ clear;
 pkg load io;
 
 #setdebug
-buildTrueData = false;
+buildTrueData = true;
 
 ##load all necessary data
 
@@ -34,24 +34,54 @@ buildTrueData = false;
 #wohnunglage =  ReadFile(filename,19);
 #disp(strcat("...done.", " - ", ctime(time())));
 
+### UI PRESETS
+appdata.UI.currentEntrySite = 2;
+appdata.UI.currentEntryAction = 2;
+
+
 if buildTrueData
 # ActionData
 [actionDataRaw, targetDBaction, actionSize] = ActionData("C:\\Users\\10300202\\Desktop\\Praxedo\\DB\\Source\\ActionData.xlsx");
 data.action.raw = actionDataRaw;
 data.action.targetDB = targetDBaction;
 data.action.size = actionSize;
+filename = "C:\\Users\\10300202\\Desktop\\Praxedo\\DB\\Target\\action";
+UnpackAction(filename,data.action.targetDB);
 # SiteData
-[siteDataRaw, targetDBsite, siteSize] = SiteData("C:\\Users\\10300202\\Desktop\\Praxedo\\DB\\Source\\SiteData.xlsx");
+[siteDataRaw, targetDBsite, siteSize] = SiteData("C:\\Users\\10300202\\Desktop\\Praxedo\\DB\\Source\\SiteData_Sorted.xlsx");
 data.site.raw = siteDataRaw;
 data.site.targetDB = targetDBsite;
 data.site.size = siteSize;
-save dbConverted.mat data;
+
+filename = "C:\\Users\\10300202\\Desktop\\Praxedo\\DB\\Target\\site";
+UnpackAction(filename,data.site.targetDB);
+
+#data.supplied = SuppliedHouses(data.site);
+appdata.data = data;
+save dbConverted.mat appdata;
 else
-data.action.raw = 1;
-data.action.targetDB = 2;
-data.action.size = 29000;
-data.site.raw = 1;
-data.site.targetDB = 2;
-data.site.size = 29000;
-save dbDummy.mat data;
+
+# ActionData
+[actionDataRaw, targetDBaction, actionSize] = ActionData("C:\\Users\\10300202\\Desktop\\Praxedo\\DB\\Source\\ActionData.xlsx");
+data.action.raw = actionDataRaw;
+data.action.targetDB = targetDBaction;
+data.action.size = actionSize;
+# SiteData
+[siteDataRaw, targetDBsite, siteSize] = SiteData("C:\\Users\\10300202\\Desktop\\Praxedo\\DB\\Source\\SiteData_Sorted.xlsx");
+data.site.raw = siteDataRaw;
+data.site.targetDB = targetDBsite;
+data.site.size = siteSize;
+data.supplied = SuppliedHouses(data.site);
+appdata.data = data;
+save dbConverted.mat appdata;
+
+#data.action.raw = 1;
+#data.action.targetDB = 2;
+#data.action.size = 29000;
+#data.site.raw = 1;
+#data.site.targetDB = 2;
+#data.site.size = 29000;
+#data.supplied = SuppliedHouses(data.site);
+#appdata.data = data;
+#save dbDummy.mat appdata;
 endif

@@ -1,4 +1,5 @@
 function [actionDataRaw, targetDBeinsatz, mySize] = ActionData(filename)
+  transferData = true;
   disp(strcat("Reading action data...", " - ", ctime(time())));
   actionDataRaw = ReadFile(filename,1);
   disp(strcat("...done.", " - ", ctime(time())));
@@ -42,33 +43,35 @@ function [actionDataRaw, targetDBeinsatz, mySize] = ActionData(filename)
   disp(strcat("...done", " - ", ctime(time())));
   disp(strcat("Writing action data to array...", " - ", ctime(time())));
   #Transfer Aktion Data
-  for i= 2:1:mySize
-    targetDBeinsatz(i,4) = actionDataRaw(i,1);
-    targetDBeinsatz(i,5) = actionDataRaw(i,2);
-    #targetDBeinsatz(i,6) = actionDataRaw(i,2); #mapping
-    #targetDBeinsatz(i,7) = actionDataRaw(i,4); #mapping
-    targetDBeinsatz(i,8) = ConvertDateTimeField(actionDataRaw(i,6));
-    targetDBeinsatz(i,10) = actionDataRaw(i,9);
-    #targetDBeinsatz(i,11) = actionDataRaw(i,11); #mapping
-    #targetDBeinsatz(i,12) = actionDataRaw(i,13); #mapping
-    targetDBeinsatz(i,13) = actionDataRaw(i,14);
-    #targetDBeinsatz(i,14) = actionDataRaw(i,15); #mibi
-    #targetDBeinsatz(i,17) = actionDataRaw(i,19); #mapping
-    #targetDBeinsatz(i,18) = actionDataRaw(i,21); #mapping
-    targetDBeinsatz(i,19) = actionDataRaw(i,22);
-    targetDBeinsatz(i,20) = actionDataRaw(i,22);
-    targetDBeinsatz(i,21) = actionDataRaw(i,22);
-    targetDBeinsatz(i,22) = "Ja";
-    targetDBeinsatz(i,23) = ConvertDateTimeField(actionDataRaw(i,29));
-    #targetDBeinsatz(i,24) = actionDataRaw(i,37); #mapping 
-    targetDBeinsatz(i,25) = actionDataRaw(i,38);
-    #targetDBeinsatz(i,26) = actionDataRaw(i,39); #mapping
-    targetDBeinsatz(i,27) = actionDataRaw(i,45);
-    targetDBeinsatz(i,28) = actionDataRaw(i,46);
-    targetDBeinsatz(i,29) = "Nein";
-    targetDBeinsatz(i,30) = "Kein Export";
-    targetDBeinsatz(i,32) = strcat(actionDataRaw(i,24)," | ", actionDataRaw(i,25));
-    disp(strcat("Entry:"," ",num2str(i)));
-  endfor
+  if transferData
+    for i= 2:1:mySize
+      targetDBeinsatz(i,4) = ToString(actionDataRaw(i,1));
+      targetDBeinsatz(i,5) = ToString(actionDataRaw(i,2));
+      targetDBeinsatz(i,6) = actionDataRaw(i,2); 
+      targetDBeinsatz(i,7) = actionDataRaw(i,4); 
+      targetDBeinsatz(i,8) = ConvertDateTimeField(actionDataRaw(i,6));
+      targetDBeinsatz(i,10) = ToString(actionDataRaw(i,9));
+      targetDBeinsatz(i,11) = ApplyMapping(actionDataRaw(i,11),1); #mapping
+      targetDBeinsatz(i,12) = ApplyMapping(actionDataRaw(i,13),2); #mapping
+      targetDBeinsatz(i,13) = ToString(actionDataRaw(i,14));
+      #targetDBeinsatz(i,14) = actionDataRaw(i,15); #mibi
+      targetDBeinsatz(i,17) = ApplyMapping(actionDataRaw(i,19),3); #mapping
+      targetDBeinsatz(i,18) = ApplyMapping(actionDataRaw(i,21),4); #mapping
+      targetDBeinsatz(i,19) = ToString(actionDataRaw(i,22));
+      targetDBeinsatz(i,20) = ToString(actionDataRaw(i,22));
+      targetDBeinsatz(i,21) = ToString(actionDataRaw(i,22));
+      targetDBeinsatz(i,22) = "Ja";
+      targetDBeinsatz(i,23) = ConvertDateTimeField(actionDataRaw(i,29));
+      targetDBeinsatz(i,24) = ApplyMapping(actionDataRaw(i,37),5); #mapping 
+      targetDBeinsatz(i,25) = ToString(actionDataRaw(i,38));
+      targetDBeinsatz(i,26) = ApplyMapping(actionDataRaw(i,39),6); #mapping
+      targetDBeinsatz(i,27) = ToString(actionDataRaw(i,45));
+      targetDBeinsatz(i,28) = ToString(actionDataRaw(i,46));
+      targetDBeinsatz(i,29) = "Nein";
+      targetDBeinsatz(i,30) = "Kein Export";
+      targetDBeinsatz(i,32) = SmartConcatNotations(actionDataRaw(i,24),actionDataRaw(i,25));
+      disp(strcat("Entry:"," ",num2str(i)));
+    endfor
+  endif
   disp(strcat("...done.", " - ", ctime(time())));
 endfunction

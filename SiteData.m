@@ -43,7 +43,7 @@ function [siteDataRaw, targetDBstandort, mySize] = SiteData(filename)
   reachedNumber = false;
   for i=2:1:mySize
     targetDBstandort(i,4) = siteDataRaw(i,1);
-    #targetDBstandort(i,5) = siteDataRaw(i,3); #mapping
+    targetDBstandort(i,5) = {ApplyMapping(siteDataRaw(i,3),7)}; #mapping
     targetDBstandort(i,7) = siteDataRaw(i,10);
     targetDBstandort(i,8) = siteDataRaw(i,14);
     targetDBstandort(i,9) = siteDataRaw(i,15);
@@ -65,7 +65,7 @@ function [siteDataRaw, targetDBstandort, mySize] = SiteData(filename)
     
     targetDBstandort(i,14) = siteDataRaw(i,21);
     targetDBstandort(i,15) = siteDataRaw(i,22);
-    #targetDBstandort(i,16) = siteDataRaw(i,28); #mapping
+    targetDBstandort(i,16) = {ApplyMapping(siteDataRaw(i,28),8)}; #mapping
     #targetDBstandort(i,17) = siteDataRaw(i,29); #mibi
     #targetDBstandort(i,23) = siteDataRaw(i,32); #mibi
     targetDBstandort(i,25) = ConvertDateTimeField(siteDataRaw(i,37));
