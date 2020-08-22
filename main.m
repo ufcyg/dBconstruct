@@ -58,7 +58,7 @@ UnpackAction(filename,data.site.targetDB);
 
 #data.supplied = SuppliedHouses(data.site);
 appdata.data = data;
-save dbConverted.mat appdata;
+save -mat7-binary dbConverted.mat appdata;#save dbConverted.mat appdata;
 else
 
 # ActionData

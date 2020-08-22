@@ -1,7 +1,8 @@
-function mappedValue = ApplyMapping(mappedValue, switchcase)
+function [mappedValue, note] = ApplyMapping(mappedValue, switchcase)
+  note = "";
   switch switchcase
   case 1
-    mappedValue = BearbeitungsstatusID(mappedValue);
+    [mappedValue, note] = BearbeitungsstatusID(mappedValue);
   case 2
     mappedValue = AuftragsinhaltID(mappedValue);
   case 3
@@ -21,7 +22,8 @@ endfunction
 ################################################################################
 ################################################################################
 #BearbeitungsstatusID#######################################BearbeitungsstatusID
-function value = BearbeitungsstatusID(value)
+function [value, note] = BearbeitungsstatusID(value)
+  note = "";
   if strcmp(value, "4")
     value = "4";
   return; endif
@@ -44,33 +46,40 @@ function value = BearbeitungsstatusID(value)
     value = "0";
   return; endif
   if strcmp(value, "gekündigt") #wert in bemerkung KB übertragen
+    note = "gekündigt";
     value = "4";
   return; endif
   if strcmp(value, "out") #wert in bemerkung KB übertragen
+    note = "out";
     value = "4";
   return; endif
   if strcmp(value, "storniert")
     value = "x2";
   return; endif
   if strcmp(value, "dez. WW.") #wert in bemerkung KB übertragen
+    note = "dez. WW.";
     value = "x1";
   return; endif
   if strcmp(value, "3")
     value = "4";
   return; endif
   if strcmp(value, "nicht untersuchungspflichtig") #wert in bemerkung KB übertragen
+    note = "nicht untersuchungspflichtig";
     value = "x1";
   return; endif
   if strcmp(value, "verkauft") #wert in bemerkung KB übertragen
+    note = "verkauft";
     value = "4";
   return; endif
   if strcmp(value, "gehört nicht mehr der HV") #wert in bemerkung KB übertragen
+    note = "gehört nicht mehr der HV";
     value = "4";
   return; endif
   if strcmp(value, "existiert nicht") 
     value = "-99";
   return; endif
   if strcmp(value, "keine weitere Beauftragung") #wert in bemerkung KB übertragen
+    note = "keine weitere Beauftragung";
     value = "4";
   return; endif
   if strcmp(value, "storniert- erst wieder dez 2019") 
