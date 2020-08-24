@@ -1,3 +1,4 @@
+### applies given mapping to input value and returns it, note is only necessary for BearbeitungsstatusID, since the old value of the field needs to be saved in a comment field and therefor returned aswell
 function [mappedValue, note] = ApplyMapping(mappedValue, switchcase)
   note = "";
   switch switchcase
@@ -1174,9 +1175,9 @@ function value = GebaeudeartID(value)
   if strcmp(value, "DG")
     value = "gewerblich";
   return; endif
-  if strcmp(value, "") || strcmp(value, " ") || strcmp(value, "  ") || strcmp(value, "   ")
-    value = "öffentlich";
-  return; endif
+  #if strcmp(value, "") || strcmp(value, " ") || strcmp(value, "  ") || strcmp(value, "   ")
+  #  value = "öffentlich";
+  #return; endif
   if strcmp(value, "Seniorenheim")
     value = "öffentlich";
   return; endif

@@ -1,11 +1,16 @@
-function [siteDataRaw, targetDBstandort, mySize] = SiteData(filename)
+### loads site DB, writes header, transfers information and applies mapping of specified values
+function [siteDataRaw, targetDBstandort, mySize, entryEdited] = SiteData(filename)
   disp(strcat("Reading site data...", " - ", ctime(time())));
   #Read Site Data Raw
   siteDataRaw = ReadFile(filename,1);
   disp(strcat("...done", " - ", ctime(time())));
   
   disp(strcat("Writing header...", " - ", ctime(time())));
-  mySize = size(siteDataRaw,1);
+  mySize = size(siteDataRaw,1); # get amount of entries in DB
+  entryEdited = cell(mySize,1); # create array for edited flag
+  for i=1:1:size(entryEdited,1) 
+    entryEdited(i,1) = false; # fill edited array with false
+  endfor
   #Preset StandortDB
   disp(strcat("Writing header...", " - ", ctime(time())));
   targetDBstandort = cell(mySize,25);                                             #Import aus ASZPM-Feld

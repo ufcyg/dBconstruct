@@ -1,12 +1,18 @@
-function [actionDataRaw, targetDBeinsatz, mySize] = ActionData(filename)
-  transferData = true;
+### loads action DB, writes header, transfers information and applies mapping of specified values
+function [actionDataRaw, targetDBeinsatz, mySize, entryEdited] = ActionData(filename)
+  transferData = true; # flag to determine of a dummyDB or real data is created
   disp(strcat("Reading action data...", " - ", ctime(time())));
-  actionDataRaw = ReadFile(filename,1);
+  actionDataRaw = ReadFile(filename,1); # opens xml file to read full datastream
   disp(strcat("...done.", " - ", ctime(time())));
   
   disp(strcat("Writing header...", " - ", ctime(time())));
-  mySize = size(actionDataRaw,1);
-  #Preset AktionDB
+  mySize = size(actionDataRaw,1); # get amount of entries in DB
+  entryEdited = cell(mySize,1); # create array for edited flag
+  for i=1:1:size(entryEdited,1)
+    entryEdited(i,1) = false; # fill edited array with false
+  endfor
+    
+  #header entry data
   targetDBeinsatz = cell(mySize,33);                                              #Import aus ASZPM-Feld
   targetDBeinsatz(1,1) = "EinsatzID";                                             #N/A
   targetDBeinsatz(1,2) = "EinsatzKennungExtern";                                  #N/A
@@ -54,7 +60,7 @@ function [actionDataRaw, targetDBeinsatz, mySize] = ActionData(filename)
       [targetDBeinsatz(i,11), kbNote] = ApplyMapping(actionDataRaw(i,11),1);              #ApplyMapping(actionDataRaw(i,11),1); #mapping
       [targetDBeinsatz(i,12), ~] = ApplyMapping(actionDataRaw(i,13),2); #mapping
       targetDBeinsatz(i,13) = ToString(actionDataRaw(i,14));
-      #targetDBeinsatz(i,14) = actionDataRaw(i,15); #mibi
+      #targetDBeinsatz(i,14) = actionDataRaw(i,15); #unknown
       [targetDBeinsatz(i,17), ~] = ApplyMapping(actionDataRaw(i,19),3); #mapping
       [targetDBeinsatz(i,18), ~] = ApplyMapping(actionDataRaw(i,21),4); #mapping
       targetDBeinsatz(i,19) = SmartConcatNotations(kbNote, ToString(actionDataRaw(i,22)));

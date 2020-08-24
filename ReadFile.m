@@ -1,3 +1,4 @@
+## loads previously installed io-package for file handling, reads xml data stream to variable and returns read data
 function rawData = ReadFile(filename,sheet)
   pkg load io;
   disp(filename);

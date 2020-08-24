@@ -1,3 +1,4 @@
+###technically it should return a field where if both comment strings are filled those entries are divided by a "|" delimiter, kinda doesnt really work like intended...
 function string = SmartConcatNotations(fieldOne, fieldTwo)
   string = "";
   if isnumeric(fieldOne)
