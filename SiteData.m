@@ -8,12 +8,12 @@ function [siteDataRaw, targetDBstandort, mySize, entryEdited] = SiteData(filenam
   disp(strcat("Writing header...", " - ", ctime(time())));
   mySize = size(siteDataRaw,1); # get amount of entries in DB
   entryEdited = cell(mySize,1); # create array for edited flag
-  for i=1:1:size(entryEdited,1) 
+  for i=2:1:mySize 
     entryEdited(i,1) = false; # fill edited array with false
   endfor
   #Preset StandortDB
   disp(strcat("Writing header...", " - ", ctime(time())));
-  targetDBstandort = cell(mySize,25);                                             #Import aus ASZPM-Feld
+  targetDBstandort = cell(mySize,26);                                             #Import aus ASZPM-Feld
   targetDBstandort(1,1) = "StandortID";                                           #N/A
   targetDBstandort(1,2) = "StandortKennungExtern";                                #N/A
   targetDBstandort(1,3) = "StandortKennungIntern";                                #N/A
@@ -39,6 +39,10 @@ function [siteDataRaw, targetDBstandort, mySize, entryEdited] = SiteData(filenam
   targetDBstandort(1,23) = "Bemerkung";                                           #[HV-Kontakt] | 32 ---mibi
   targetDBstandort(1,24) = "KundenbetreuerVorbelegungID";                         #N/A
   targetDBstandort(1,25) = "NächsterTermin";                                      #MaxSollTermin | 37 !!!DATETIME!!!
+  targetDBstandort(1,26) = "AnlageAdressePrüfen";                                 #Flag vom Bearbeiter gesetzt
+  for i=2:1:mySize
+    targetDBstandort(i,26) = 0;
+  endfor
   disp(strcat("...done", " - ", ctime(time())));
   
   disp(strcat("Writing site data to array...", " - ", ctime(time())));

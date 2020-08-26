@@ -2,6 +2,8 @@
 function [mappedValue, note] = ApplyMapping(mappedValue, switchcase)
   note = "";
   switch switchcase
+  case 0
+    mappedValue = KundenbetreuerID(mappedValue);
   case 1
     [mappedValue, note] = BearbeitungsstatusID(mappedValue);
   case 2
@@ -19,6 +21,15 @@ function [mappedValue, note] = ApplyMapping(mappedValue, switchcase)
   case 8
     mappedValue = GebaeudeartID(mappedValue);
   endswitch
+endfunction
+################################################################################
+################################################################################
+#BearbeitungsstatusID#######################################BearbeitungsstatusID
+function value = KundenbetreuerID(value)
+  #if strcmp()
+  #  
+  #  return;
+  #endif
 endfunction
 ################################################################################
 ################################################################################
